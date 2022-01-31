@@ -1,5 +1,4 @@
 from array import *
-from operator import concat
 from tabulate import *
 
 
@@ -55,7 +54,6 @@ get_lists()
 length=len(guesses)
 for i in range(length):
     guesses[i][1]=get_stats(guesses[i])
-    guesses[i]
     print(str(i+1)+"/" + str(length))
         
 with open('words_with_stats.txt', 'w') as f:
