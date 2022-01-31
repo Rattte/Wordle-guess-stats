@@ -1,11 +1,13 @@
 from array import *
 from tabulate import *
+import csv
 
 global guesses
 guesses=[]
 global words
 words=[]
-
+with open('words_with_stats.csv', 'w') as f:
+    f.write('')
 def get_lists():
     #reads allowed guesses file into a table
     with open('wordle-allowed-guesses.txt') as f:
@@ -69,11 +71,14 @@ def get_stats(word):
     return (total_left/len(words)/len(words))*100
 
 get_lists()
+
 length=len(guesses)
-for i in range(3):
-    guesses[i][1]=get_stats(guesses[i])
+for i in range(length):
+    guesses[i][1]=str(get_stats(guesses[i]))
     print(str(i+1)+"/" + str(length))
-        
-with open('words_with_stats.txt', 'w') as f:
-    f.write(tabulate(guesses))
+    with open('words_with_stats.csv', 'a') as f:
+        # create the csv writer
+        writer = csv.writer(f)
+        # write a row to the csv file
+        writer.writerow(guesses[i])
     
