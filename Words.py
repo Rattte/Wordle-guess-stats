@@ -1,7 +1,6 @@
 from array import *
 from operator import concat
-
-#this program will determine the best words for wordle
+from tabulate import *
 
 
 global guesses
@@ -51,16 +50,14 @@ def get_stats(word):
             if valid:
                 total_left+=1
     return (total_left/len(words)/len(words))*100
-            
 
-
- 
 get_lists()
 length=len(guesses)
-for i in range(3):
+for i in range(length):
     guesses[i][1]=get_stats(guesses[i])
     guesses[i]
     print(str(i+1)+"/" + str(length))
-print(guesses[0])
-
+        
+with open('words_with_stats.txt', 'w') as f:
+    f.write(tabulate(guesses))
     
