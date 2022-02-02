@@ -1,15 +1,16 @@
 from array import *
+from operator import index, indexOf
 from typing import Counter
 from tabulate import *
 import csv
-import concurrent.futures
+from joblib import Parallel, delayed
 
 global guesses
 guesses=[]
 global words
 words=[]
 global count
-count = 0
+count = 1
 
 with open('words_with_stats.csv', 'w') as f:
     f.write('')
@@ -28,10 +29,10 @@ def get_lists():
             
 def get_stats(word):
     global count
-    print(count)
-    count+=1
+    print(word)
+    print(indexOf(guesses, word))
+    
     current_guess=list(word)
-    print
     total_left=0
     ##iterates through all words
     for n in words:
@@ -91,9 +92,7 @@ if __name__ == '__main__':
     
     
     get_lists()
-    print(guesses)
-    executor = concurrent.futures.ProcessPoolExecutor(12)
-    futures = [executor.submit(get_stats(g)) for g in guesses]
-    concurrent.futures.wait(futures)
+    Parallel(n_jobs=10)(delayed(get_stats)(i) for i in guesses)
+    
     
     
