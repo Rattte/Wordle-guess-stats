@@ -29,8 +29,7 @@ def get_lists():
             
 def get_stats(word):
     global count
-    print(word)
-    print(indexOf(guesses, word))
+    #print(indexOf(guesses, word))
     
     current_guess=list(word)
     total_left=0
@@ -42,6 +41,8 @@ def get_stats(word):
         def_letters=['','','','','']
         #list of letters not in word
         no_letters=[]
+        #list of letters in wrong spot
+        Wrong_letters=['','','','','']
         current_word=list(n)
         
         ##iterates through all letters in the starting word
@@ -53,8 +54,11 @@ def get_stats(word):
                     def_letters[l]=current_guess[l]
                 else:
                     valid_letters.append(current_guess[l])
+                    Wrong_letters[l]=current_guess[l]
+                    
             else:
                 no_letters.append(current_guess[l])
+                
         
         #checks if other words are still valid
         for m in words:
@@ -70,13 +74,20 @@ def get_stats(word):
                     if def_letters[i]!='':
                         if def_letters[i]!=lets[i]:
                             valid=False
+                    if Wrong_letters[i]!='':
+                        if Wrong_letters[i]==lets[i]:
+                            valid=False
+                            
             #check if grey letters exist
             if valid:
                 for i in no_letters:
                     if i in lets:
                         valid=False
+                        
             if valid:
                 total_left+=1
+                
+        #print(m,total_left)
     #returns % of total words remaining
     add_line([word,(total_left/len(words)/len(words))*100])
 
